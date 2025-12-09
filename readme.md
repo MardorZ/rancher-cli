@@ -2,6 +2,10 @@
 
 A lightweight Docker image designed to speed up CI/CD deployment pipelines. It comes pre-installed with **Rancher CLI** and **kubectl**, eliminating the need to install these tools during every pipeline run.
 
+### DockerHub
+
+> https://hub.docker.com/r/mardorz/rancher-kubectl
+
 ## 📦 Included Tools
 
 * **Base Image:** `debian:stable-slim` (optimized for size and speed)
