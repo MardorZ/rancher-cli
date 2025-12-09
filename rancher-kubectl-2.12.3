@@ -1,0 +1,16 @@
+FROM debian:stable-slim
+
+# Tools installieren (in einem RUN-Befehl, um Layer zu sparen)
+RUN apt-get update && apt-get install -y curl jq ca-certificates \
+    # Rancher CLI
+    && curl -LO https://github.com/rancher/cli/releases/download/v2.12.3/rancher-linux-amd64-v2.12.3.tar.gz \
+    && tar -xzf rancher-linux-amd64-v2.12.3.tar.gz \
+    && mv rancher-v2.12.3/rancher /usr/local/bin/rancher \
+    && curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+    && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
+    # Aufräumen (Wichtig für kleine Images!)
+    && rm -rf rancher-linux-amd64-v2.12.3.tar.gz rancher-v2.12.3 kubectl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Check ob alles da ist
+RUN rancher --version && kubectl version --client
